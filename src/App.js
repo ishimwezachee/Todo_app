@@ -7,14 +7,20 @@ function App() {
   const [input, setInput] = useState('');
   const addTodo = (event)=> {
     // this will fire of when we add do!
+    event.preventDefault(); // will stop the refresh 
     setTodos([...todos,input])
   }
   console.log(todos)
   return (
     <div className="App">
       <h1>Hello Clever Programmers</h1>
+      <form>
       <input value={input} onChange={event=> setInput(event.target.value)}/>
-      <button onClick={addTodo}>Add to do </button>
+      <button type="submit" onClick={addTodo}>Add to do </button>
+      </form>
+
+
+
       <ul>
         {todos.map(todo => (
           <li>{todo}</li>

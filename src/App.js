@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Button, FormControl,InputLabel,Input } from '@material-ui/core'
+import Todo from './todo'
 import './App.css';
 
 function App() {
   //short term memory.
-  const [todos, setTodos] = useState(['Take dogs for a walk', 'Take Rubish out', 'back to bed']);
+  const [todos, setTodos] = useState(['1. Take dogs for a walk', '2. Take Rubish out', '3. back to bed','4. study the last lessons']);
   const [input, setInput] = useState('');
   const addTodo = (event) => {
     // this will fire of when we add do!
@@ -30,8 +31,9 @@ function App() {
       </form>
 
       <ul>
+          {/** you can loop in jsx */}
         {todos.map(todo => (
-          <li>{todo}</li>
+          <Todo text={todo}/>
         ))}
       </ul>
     </div>

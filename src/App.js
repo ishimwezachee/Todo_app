@@ -7,23 +7,22 @@ import './App.css';
 
 function App() {
   //short term memory.
-  const [todos, setTodos] = useState([ ]);
+  const [todos, setTodos] = useState([]);
   const [input, setInput] = useState('');
 // when the apps loads, we need to listen to the database and fetch newtodoes as they are added/removed
   
   useEffect(()=>{
     // this code here... fires when the apps loads
     db.collection('todos').orderBy('timestamp','desc').onSnapshot(onSnapshot=>{
-      setTodos(onSnapshot.docs.map(doc=> doc.data().todo))
-    })
-
+      setTodos(onSnapshot.docs.map(doc=> ({id:doc.id, todo:doc.data().todo})));
+    });
   }, [])
 
 
   const addTodo = (event) => {
     // this will fire of when we add do!
-    event.preventDefault(); // will stop the refresh 
-   db.collection('todos').add({
+     event.preventDefault(); // will stop the refresh 
+     db.collection('todos').add({
      todo:input,
      timestamp:firebase.firestore.FieldValue.serverTimestamp()
    })
@@ -31,10 +30,10 @@ function App() {
     // setTodos([...todos, input])
     setInput('');
   }
-  console.log(todos)
+  // console.log(todos)
   return (
     <div className="App">
-      <h1>Hello Clever Programmers</h1>
+      <h1>ToDO App</h1>
       <form>
         {/* <input value={input} onChange={event => setInput(event.target.value)} /> */}
         <FormControl>
@@ -51,7 +50,7 @@ function App() {
       <ul>
           {/** you can loop in jsx */}
         {todos.map(todo => (
-          <Todo text={todo}/>
+          <Todo todo={todo}/>
         ))}
       </ul>
     </div>

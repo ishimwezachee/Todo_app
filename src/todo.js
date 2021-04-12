@@ -1,6 +1,6 @@
 // one row to do
 import React, { useState } from "react";
-import { List, ListItem, ListItemText, Button,Input } from "@material-ui/core";
+import { List, ListItem, ListItemText, Button, Input } from "@material-ui/core";
 import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: 400,
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: "5  px solid #A9A9A9",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -27,7 +27,7 @@ function Todo(props) {
   const [input, setInput] = useState();
 
   const updateTodo = () => {
-    //update TODOS with the new input text
+    //update TODOS 
     db.collection("todos").doc(props.todo.id).set(
       {
         todo: input,
@@ -38,21 +38,39 @@ function Todo(props) {
     setOpen(false);
   };
 
+  const deleteTodo = ()=>{
+      // delete todo 
+    db.collection("todos").doc(props.todo.id).delete()
+  }
+
+  const onCloseHandler =(event)=>{
+    setOpen(false)
+  }
+  const onOpenHandler =(event)=>{
+    setOpen(true)
+  }
+  const inputHandler =(event)=>{
+      setInput(event.target.value)
+}
+
+
   return (
     <>
-      <Modal open={open} onClose={(e) => setOpen(false)}>
+      <Modal 
+      open={open} 
+      onClose={onCloseHandler}
+      >
         <div className={classes.paper}>
           <h1>Update todo</h1>
           <Input
             placeholder={props.todo.todo}
             value={input}
-            onChange={(event) => setInput(event.target.value)}
+            onChange={inputHandler}
           />
           <Button
             variant="contained"
             color="primary"
             size="small"
-            // className={classes.button}
             startIcon={<SaveIcon />}
             onClick={updateTodo}
           >
@@ -65,15 +83,13 @@ function Todo(props) {
           <ListItemText primary={props.todo.todo} secondary="Dummy deadline" />
         </ListItem>
         <EditIcon
-          onClick={(e) => setOpen(true)}
+          onClick={onOpenHandler}
           color="primary"
           fontSize="small"
         />
         <RemoveCircleOutlineIcon
           color="secondary"
-          onClick={(event) => {
-            db.collection("todos").doc(props.todo.id).delete();
-          }}
+          onClick={deleteTodo}
         />
       </List>
     </>

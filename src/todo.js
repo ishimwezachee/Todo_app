@@ -26,8 +26,11 @@ function Todo(props) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState();
 
+  const inputHandler = (event) => {
+    setInput(event.target.value);
+  };
   const updateTodo = () => {
-    //update TODOS 
+    //update TODOS
     db.collection("todos").doc(props.todo.id).set(
       {
         todo: input,
@@ -38,28 +41,21 @@ function Todo(props) {
     setOpen(false);
   };
 
-  const deleteTodo = ()=>{
-      // delete todo 
-    db.collection("todos").doc(props.todo.id).delete()
-  }
+  const deleteTodo = () => {
+    // delete todo
+    db.collection("todos").doc(props.todo.id).delete();
+  };
 
-  const onCloseHandler =(event)=>{
-    setOpen(false)
-  }
-  const onOpenHandler =(event)=>{
-    setOpen(true)
-  }
-  const inputHandler =(event)=>{
-      setInput(event.target.value)
-}
-
+  const onCloseHandler = (event) => {
+    setOpen(false);
+  };
+  const onOpenHandler = (event) => {
+    setOpen(true);
+  };
 
   return (
     <>
-      <Modal 
-      open={open} 
-      onClose={onCloseHandler}
-      >
+      <Modal open={open} onClose={onCloseHandler}>
         <div className={classes.paper}>
           <h1>Update todo</h1>
           <Input
@@ -82,15 +78,8 @@ function Todo(props) {
         <ListItem>
           <ListItemText primary={props.todo.todo} secondary="Dummy deadline" />
         </ListItem>
-        <EditIcon
-          onClick={onOpenHandler}
-          color="primary"
-          fontSize="small"
-        />
-        <RemoveCircleOutlineIcon
-          color="secondary"
-          onClick={deleteTodo}
-        />
+        <EditIcon onClick={onOpenHandler} color="primary" fontSize="small" />
+        <RemoveCircleOutlineIcon color="secondary" onClick={deleteTodo} />
       </List>
     </>
   );

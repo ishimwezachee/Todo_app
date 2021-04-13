@@ -22,7 +22,10 @@ function App() {
       });
   }, []);
 
-
+  const inputHandler = (event) => {
+    setInput(event.target.value);
+  };
+  
   const addTodo = (event) => {
     //  fire of when we add do!
     event.preventDefault(); // ==>  stop the refresh
@@ -34,9 +37,6 @@ function App() {
     setInput("");
   };
 
-  const inputHandler = (event) => {
-    setInput(event.target.value);
-  };
   return (
     <div className="App">
       <h1>ToDO App</h1>

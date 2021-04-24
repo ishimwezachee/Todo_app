@@ -39,4 +39,4 @@
 [MaterialUI](https://material-ui.com/getting-started/installation/)
 
 #### Author 
-Zachee Ishimwe
+[Zachee Ishimwe](https://www.linkedin.com/in/zachee-ishimwe-ab952a119/)
